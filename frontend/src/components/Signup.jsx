@@ -34,9 +34,9 @@ function Signup() {
       <div className="relative z-10 w-full max-w-5xl bg-white/10 backdrop-blur-xl rounded-2xl p-12 shadow-2xl border border-white/20">
         {/* Two-column layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left Section - top aligned */}
-          <div className="text-left pr-6 border-r border-gray-600 flex flex-col">
-            <div>
+          {/* Left Section - centered content */}
+          <div className="flex flex-col justify-center items-center pr-6 border-r border-gray-600">
+            <div className="text-center">
               <h1 className="text-5xl font-extrabold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent tracking-tight">
                 Brain Board
               </h1>
