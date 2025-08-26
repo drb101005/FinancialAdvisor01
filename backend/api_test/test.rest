@@ -1,0 +1,10 @@
+POST http://127.0.0.1:8000/api/portfolio/transactions/add/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MjM2MjMyLCJpYXQiOjE3NTYyMzU5MzIsImp0aSI6ImY5NTlkODhhOGEzYTRhZjY4Yzc1MzM0MjI0MDU4Y2Q0IiwidXNlcl9pZCI6MX0.rYFXRLApeK57sFmsjBQj8P2NGdJjfBPv7hL6abw3XlA
+Content-Type: application/json
+
+{
+  "ticker": "AAPL",
+  "transaction_type": "BUY",
+  "quantity": 10,
+  "price": 150
+}
