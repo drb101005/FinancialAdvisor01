@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 class Portfolio(models.Model):
+    name = models.CharField(default="")
+    note = models.TextField(default="")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     total_value = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,8 +24,7 @@ class Holding(models.Model):
         return self.quantity * self.current_price if self.current_price else None
 
 class Transaction(models.Model):
-    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    ticker = models.CharField(max_length=10)
+    holding = models.ForeignKey(Holding, on_delete=models.CASCADE, related_name="transactions",)
     transaction_type = models.CharField(max_length=10, choices=[("BUY", "Buy"), ("SELL", "Sell")])
     quantity = models.DecimalField(max_digits=15, decimal_places=2)
     price = models.DecimalField(max_digits=15, decimal_places=2)

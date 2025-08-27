@@ -4,3 +4,4 @@ Include
 etc
 data_testing
 share
+__pycache__/

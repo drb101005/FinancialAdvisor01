@@ -1,10 +1,31 @@
-POST http://127.0.0.1:8000/api/portfolio/transactions/add/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MjM2MjMyLCJpYXQiOjE3NTYyMzU5MzIsImp0aSI6ImY5NTlkODhhOGEzYTRhZjY4Yzc1MzM0MjI0MDU4Y2Q0IiwidXNlcl9pZCI6MX0.rYFXRLApeK57sFmsjBQj8P2NGdJjfBPv7hL6abw3XlA
+### Login
+POST http://127.0.0.1:8000/api/accounts/login/
 Content-Type: application/json
 
 {
-  "ticker": "AAPL",
-  "transaction_type": "BUY",
-  "quantity": 10,
-  "price": 150
+    "username": "adity",
+    "password": "123456"
+}
+
+### Creating Portfolio
+POST http://127.0.0.1:8000/api/portfolio/portfolios/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MzI2NjMzLCJpYXQiOjE3NTYzMjYzMzMsImp0aSI6IjQ2ZGQ2ZmRkNWM1MDQ3MWQ4MzA5MmU5MjdhOWI0MWU5IiwidXNlcl9pZCI6MX0.Ki9BtagW97sAkWyNqlP6c-u-tuGd34rzdeUfkY9AQ3Q
+Content-Type: application/json
+
+{
+  "name": "Retirement Planning",
+  "note": "Creating Future Safe by Long Term and small investments"
+}
+
+### Creating Holdings
+POST http://127.0.0.1:8000/api/portfolio/transactions/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MzI3MDkzLCJpYXQiOjE3NTYzMjY3OTMsImp0aSI6IjkyZmU4ZTIyNTgzNjRmYjA4NWM0NzIzZmIwMmYxY2M3IiwidXNlcl9pZCI6MX0.fMmio-88yG7pnFkEypl9NDBQzNlkefZ1QVIsO9ybn3A
+Content-Type: application/json
+
+{
+  "holding":1,
+  "quantity":9,
+  "price":800,
+  "ticker":"AAPL",
+  "transaction_type":"BUY"
 }
