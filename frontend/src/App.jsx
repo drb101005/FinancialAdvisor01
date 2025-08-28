@@ -7,14 +7,15 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import PrivateRoute from "./components/PrivateRoute"; // auth wrapper
+import PrivateRoute from "./components/PrivateRoute";
 
-// New pages
+// Pages
 import PortfolioDashboard from "./components/PortfolioDashboard";
 import InvestmentProfile from "./components/InvestmentProfile";
 import QuestionnaireForm from "./components/QuestionnaireForm";
 import TraitForm from "./components/TraitForm";
 import CreatePortfolio from "./components/CreatePortfolio";
+import Unauthorized from "./components/Unauthorized";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -26,6 +27,7 @@ function App() {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* Protected routes */}
         <Route
