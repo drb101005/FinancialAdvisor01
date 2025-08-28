@@ -1,105 +1,171 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from django.shortcuts import get_object_or_404
-
 from .models import Portfolio, Holding, Transaction, InvestmentProfile
 from .serializers import (
     PortfolioSerializer,
     HoldingSerializer,
     TransactionSerializer,
-    InvestmentProfileSerializer,
-    QuestionnaireSerializer
+    InvestmentProfileSerializer
 )
 
-# -------------------------
+
+# -----------------------------
 # Portfolio CRUD
-# -------------------------
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_portfolio(request):
-    portfolio, _ = Portfolio.objects.get_or_create(user=request.user)
-    serializer = PortfolioSerializer(portfolio)
-    return Response(serializer.data)
-
-# -------------------------
-# Holdings
-# -------------------------
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def add_holding(request):
-    portfolio, _ = Portfolio.objects.get_or_create(user=request.user)
-    serializer = HoldingSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save(portfolio=portfolio)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# -------------------------
-# Transactions
-# -------------------------
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def add_transaction(request):
-    portfolio, _ = Portfolio.objects.get_or_create(user=request.user)
-    serializer = TransactionSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save(portfolio=portfolio)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# -------------------------
-# Investment Profile CRUD
-# -------------------------
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_profile(request):
-    profile, _ = InvestmentProfile.objects.get_or_create(user=request.user)
-    serializer = InvestmentProfileSerializer(profile)
-    return Response(serializer.data)
-
-@api_view(["POST", "PUT"])
-@permission_classes([IsAuthenticated])
-def update_profile(request):
-    profile, _ = InvestmentProfile.objects.get_or_create(user=request.user)
-    serializer = InvestmentProfileSerializer(profile, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
+# -----------------------------
+@api_view(["GET", "POST"])
+def portfolio_list_create(request):
+    if request.method == "GET":
+        portfolios = Portfolio.objects.all()
+        serializer = PortfolioSerializer(portfolios, many=True)
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# -------------------------
-# Questionnaire Evaluation
-# -------------------------
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def evaluate_questionnaire(request):
-    serializer = QuestionnaireSerializer(data=request.data)
-    if serializer.is_valid():
-        data = serializer.validated_data
-        # Map answers (0-4) to 0-1 for traits
-        traits = {
-            "risk_taker": data["q1"]/4,
-            "safe": 1 - (data["q1"]/4),
-            "long_term": data["q2"]/4,
-            "short_term": 1 - (data["q2"]/4),
-            "small_amount": data["q3"]/4,
-            "huge_amount": 1 - (data["q3"]/4),
-            "liquidity": data["q4"]/4,
-            "income_stability": data["q5"]/4,
-            "diversification": data["q6"]/4,
-            "sustainability_focus": data["q7"]/4,
-            "tax_sensitivity": data["q8"]/4,
-            "growth_focus": data["q9"]/4,
-            "income_focus": 1 - (data["q9"]/4),
-            "automation_friendly": data["q10"]/4,
-            "emergency_reserve": data["q11"]/4,
-        }
+    elif request.method == "POST":
+        serializer = PortfolioSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        profile, _ = InvestmentProfile.objects.get_or_create(user=request.user)
-        profile.traits = traits
-        profile.raw_answers = data
-        profile.save()
-        return Response({"message": "Profile updated via questionnaire", "traits": traits})
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET", "PUT", "DELETE"])
+def portfolio_detail(request, pk):
+    try:
+        portfolio = Portfolio.objects.get(pk=pk, user=request.user)
+    except Portfolio.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        serializer = PortfolioSerializer(portfolio)
+        return Response(serializer.data)
+
+    elif request.method == "PUT":
+        serializer = PortfolioSerializer(portfolio, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        portfolio.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# -----------------------------
+# Holding CRUD
+# -----------------------------
+@api_view(["GET", "POST"])
+def holding_list_create(request):
+    if request.method == "GET":
+        holdings = Holding.objects.all()
+        serializer = HoldingSerializer(holdings, many=True)
+        return Response(serializer.data)
+
+    elif request.method == "POST":
+        serializer = HoldingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET", "PUT", "DELETE"])
+def holding_detail(request, pk):
+    try:
+        holding = Holding.objects.get(pk=pk)
+    except Holding.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        serializer = HoldingSerializer(holding)
+        return Response(serializer.data)
+
+    elif request.method == "PUT":
+        serializer = HoldingSerializer(holding, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        holding.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# -----------------------------
+# Transaction CRUD
+# -----------------------------
+@api_view(["GET", "POST"])
+def transaction_list_create(request):
+    if request.method == "GET":
+        transactions = Transaction.objects.all()
+        serializer = TransactionSerializer(transactions, many=True)
+        return Response(serializer.data)
+
+    elif request.method == "POST":
+        serializer = TransactionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET", "PUT", "DELETE"])
+def transaction_detail(request, pk):
+    try:
+        transaction = Transaction.objects.get(pk=pk)
+    except Transaction.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        serializer = TransactionSerializer(transaction)
+        return Response(serializer.data)
+
+    elif request.method == "PUT":
+        serializer = TransactionSerializer(transaction, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        transaction.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(["GET", "POST"])
+def investment_profile_list_create(request):
+    if request.method == "GET":
+        profiles = InvestmentProfile.objects.all()
+        serializer = InvestmentProfileSerializer(profiles, many=True)
+        return Response(serializer.data)
+
+    elif request.method == "POST":
+        serializer = InvestmentProfileSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET", "PUT", "DELETE"])
+def investment_profile_detail(request, pk):
+    try:
+        profile = InvestmentProfile.objects.get(pk=pk, user=request.user)
+    except InvestmentProfile.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        serializer = InvestmentProfileSerializer(profile)
+        return Response(serializer.data)
+
+    elif request.method == "PUT":
+        serializer = InvestmentProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        profile.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

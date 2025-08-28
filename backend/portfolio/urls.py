@@ -3,13 +3,18 @@ from . import views
 
 urlpatterns = [
     # Portfolio
-    path("portfolio/", views.get_portfolio, name="get_portfolio"),
+    path("portfolios/", views.portfolio_list_create, name="portfolio-list-create"),
+    path("portfolios/<int:pk>/", views.portfolio_detail, name="portfolio-detail"),
+
     # Holdings
-    path("holdings/add/", views.add_holding, name="add_holding"),
+    path("holdings/", views.holding_list_create, name="holding-list-create"),# GET and POST
+    path("holdings/<int:pk>/", views.holding_detail, name="holding-detail"), # GET PUT, PATCH and DELETE
+
     # Transactions
-    path("transactions/add/", views.add_transaction, name="add_transaction"),
+    path("transactions/", views.transaction_list_create, name="transaction-list-create"), # GET and POST
+    path("transactions/<int:pk>/", views.transaction_detail, name="transaction-detail"), # GET PUT, PATCH and DELETE
+
     # Investment Profile
-    path("profile/", views.get_profile, name="get_profile"),
-    path("profile/update/", views.update_profile, name="update_profile"),
-    path("profile/evaluate/", views.evaluate_questionnaire, name="evaluate_questionnaire"),
+    path("investment-profiles/", views.investment_profile_list_create, name="investmentprofile-list-create"),# GET and POST
+    path("investment-profiles/<int:pk>/", views.investment_profile_detail, name="investmentprofile-detail"),# PUT, PATCH and DELETE
 ]
