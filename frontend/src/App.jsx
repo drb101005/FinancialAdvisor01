@@ -13,6 +13,8 @@ import PrivateRoute from "./components/PrivateRoute"; // auth wrapper
 import PortfolioDashboard from "./components/PortfolioDashboard";
 import InvestmentProfile from "./components/InvestmentProfile";
 import QuestionnaireForm from "./components/QuestionnaireForm";
+import TraitForm from "./components/TraitForm";
+import CreatePortfolio from "./components/CreatePortfolio";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -47,6 +49,22 @@ function App() {
           element={
             <PrivateRoute>
               <QuestionnaireForm />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/traits"
+          element={
+            <PrivateRoute>
+              <TraitForm />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/create-portfolio"
+          element={
+            <PrivateRoute>
+              <CreatePortfolio />
             </PrivateRoute>
           }
         />
