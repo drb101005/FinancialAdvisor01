@@ -1,41 +1,41 @@
-import React, { useState } from 'react';
-import { login } from '../authService';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { login } from "../authService";
+import { useNavigate } from "react-router-dom";
+import { UserIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loginErr, setLoginErr] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginErr, setLoginErr] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(username, password);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error) {
-      setLoginErr('Incorrect username or password');
+      setLoginErr("Incorrect username or password");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white font-sans antialiased">
-      {/* Background with a subtle gradient effect for depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-black -z-10"></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white font-sans relative overflow-hidden">
+      {/* Decorative gradient circles */}
+      <div className="absolute top-10 left-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl"></div>
 
-      <div className="relative z-10 w-full max-w-md bg-white dark:bg-gray-800 rounded-3xl p-8 sm:p-10 shadow-xl dark:shadow-2xl border border-gray-200 dark:border-gray-700">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-2">
+      <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-xl rounded-2xl p-10 shadow-2xl border border-white/20">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-extrabold bg-gradient-to-r from-emerald-400 to-cyan-500 bg-clip-text text-transparent tracking-tight">
             BrainBoard
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 text-lg">Sign in to your account</p>
+          <p className="text-gray-300 mt-2 text-lg">Secure Login for Advisors</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 sr-only">
-              Username
-            </label>
+          <div className="relative">
+            <UserIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
               id="username"
@@ -43,13 +43,12 @@ function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="w-full px-5 py-3 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition duration-200 text-lg" 
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition duration-200 text-lg"
             />
           </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 sr-only">
-              Password
-            </label>
+
+          <div className="relative">
+            <LockClosedIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="password"
               id="password"
@@ -57,31 +56,29 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-5 py-3 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition duration-200 text-lg" 
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition duration-200 text-lg"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-cyan-600 text-white font-semibold py-3 rounded-xl hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-950 transition duration-300 ease-in-out transform hover:-translate-y-0.5 text-lg shadow-lg" 
+            className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold py-3 rounded-xl hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-300 ease-in-out transform hover:-translate-y-0.5 text-lg shadow-lg"
           >
             Login
           </button>
         </form>
 
         {loginErr && (
-          <p className="mt-6 text-center text-red-500 dark:text-red-400 text-sm font-medium">
+          <p className="mt-6 text-center text-red-400 text-sm font-medium">
             {loginErr}
           </p>
         )}
 
-        <p className="mt-8 text-center text-gray-600 dark:text-gray-400 text-base">
-          New to BrainBoard?{' '}
+        <p className="mt-8 text-center text-gray-400 text-base">
+          New to BrainBoard?{" "}
           <span
-            className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-semibold cursor-pointer transition duration-200" 
-            onClick={() => {
-              navigate('/signup');
-            }}
+            className="text-emerald-400 hover:text-emerald-300 font-semibold cursor-pointer transition duration-200"
+            onClick={() => navigate("/signup")}
           >
             Sign up
           </span>
