@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ### Creating Portfolio
 POST http://127.0.0.1:8000/api/portfolio/portfolios/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MzI2NjMzLCJpYXQiOjE3NTYzMjYzMzMsImp0aSI6IjQ2ZGQ2ZmRkNWM1MDQ3MWQ4MzA5MmU5MjdhOWI0MWU5IiwidXNlcl9pZCI6MX0.Ki9BtagW97sAkWyNqlP6c-u-tuGd34rzdeUfkY9AQ3Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2Mzk0MjI4LCJpYXQiOjE3NTYzOTM5MjgsImp0aSI6IjEzYjdjY2M2OTljNzQyNDFhMTY3YmM1ZmUwOWM2OTAzIiwidXNlcl9pZCI6MX0.r9ZAFSuUn1c76HtPSEQcr10cmSc1-uJWvu57V0HIClU
 Content-Type: application/json
 
 {
@@ -18,14 +18,34 @@ Content-Type: application/json
 }
 
 ### Creating Holdings
-POST http://127.0.0.1:8000/api/portfolio/transactions/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MzI3MDkzLCJpYXQiOjE3NTYzMjY3OTMsImp0aSI6IjkyZmU4ZTIyNTgzNjRmYjA4NWM0NzIzZmIwMmYxY2M3IiwidXNlcl9pZCI6MX0.fMmio-88yG7pnFkEypl9NDBQzNlkefZ1QVIsO9ybn3A
+POST http://127.0.0.1:8000/api/portfolio/holdings/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2Mzg3MjEyLCJpYXQiOjE3NTYzODY5MTIsImp0aSI6ImFlMDdiNzRmOGE4NzQwY2I5MTJjMmJmZmFmMDZjMzMzIiwidXNlcl9pZCI6MX0.PgLnMI_WI3iuIabgLB02I3a8V6gRkmvQo_6ZKKF1iJs
 Content-Type: application/json
 
-{
+{ 
+  "portfolio":1,
+  "quantity":9,
+  "current_price":800,
+  "ticker":"GOOG",
+  "avg_buy_price":0
+}
+
+### Creating Transaction
+POST http://127.0.0.1:8000/api/portfolio/transactions/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2Mzk0MjI4LCJpYXQiOjE3NTYzOTM5MjgsImp0aSI6IjEzYjdjY2M2OTljNzQyNDFhMTY3YmM1ZmUwOWM2OTAzIiwidXNlcl9pZCI6MX0.r9ZAFSuUn1c76HtPSEQcr10cmSc1-uJWvu57V0HIClU
+Content-Type: application/json
+
+{ 
   "holding":1,
   "quantity":9,
-  "price":800,
+  "current_price":800,
   "ticker":"AAPL",
-  "transaction_type":"BUY"
+  "avg_buy_price":0,
+  "transaction_type":"BUY",
+  "price":750
 }
+
+### Get Portfolio details
+GET http://127.0.0.1:8000/api/portfolio/portfolios/1/detail/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NDUxMTYwLCJpYXQiOjE3NTY0NTA4NjAsImp0aSI6ImIyOGRmMzdiMDM3YTQ3OGE4Nzc0OTQyNTgwNzk2N2IzIiwidXNlcl9pZCI6MX0.yMxC5yr9Zo0SAwO7CASFOv7PsYForRXMn9sAglP-Hng
+Content-Type: application/json

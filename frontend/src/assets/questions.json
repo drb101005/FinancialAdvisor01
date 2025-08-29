@@ -1,0 +1,169 @@
+{
+  "questions": [
+    {
+      "trait": "risk_taker",
+      "question": "How comfortable are you with taking risks in your investments?",
+      "options": [
+        { "value": 0, "text": "I avoid risk at all costs" },
+        { "value": 1, "text": "I take very minimal risks" },
+        { "value": 2, "text": "I am okay with some calculated risks" },
+        { "value": 3, "text": "I usually take above-average risks" },
+        { "value": 4, "text": "I enjoy taking big risks for high rewards" }
+      ]
+    },
+    {
+      "trait": "safe",
+      "question": "How important is safety of your investment over growth?",
+      "options": [
+        { "value": 0, "text": "Not important, I don’t care about safety" },
+        { "value": 1, "text": "Slightly important, but growth matters more" },
+        { "value": 2, "text": "Moderately important, I balance both" },
+        { "value": 3, "text": "Very important, I prefer safer investments" },
+        { "value": 4, "text": "Extremely important, I only want safe options" }
+      ]
+    },
+    {
+      "trait": "long_term",
+      "question": "What is your preferred investment horizon?",
+      "options": [
+        { "value": 0, "text": "I never think long term" },
+        { "value": 1, "text": "Less than 1 year" },
+        { "value": 2, "text": "1–3 years" },
+        { "value": 3, "text": "3–5 years" },
+        { "value": 4, "text": "More than 5 years" }
+      ]
+    },
+    {
+      "trait": "short_term",
+      "question": "How often do you expect returns from your investments?",
+      "options": [
+        { "value": 0, "text": "I don’t need short-term returns" },
+        { "value": 1, "text": "Every year" },
+        { "value": 2, "text": "Every 6 months" },
+        { "value": 3, "text": "Every month" },
+        { "value": 4, "text": "Very frequently (weekly/daily)" }
+      ]
+    },
+    {
+      "trait": "small_amount",
+      "question": "How much money are you comfortable investing at once?",
+      "options": [
+        { "value": 0, "text": "I prefer not investing at all or until Rs 500 max" },
+        { "value": 1, "text": "Very small amounts (under Rs.5000)" },
+        { "value": 2, "text": "Small to moderate amounts (Rs5000-Rs50000)" },
+        { "value": 3, "text": "Moderate amounts (Rs50,000-Rs500,000)" },
+        { "value": 4, "text": "I'm fine investing large sums regularly over Rs 500,000" }
+      ]
+    },
+    {
+      "trait": "huge_amount",
+      "question": "How likely are you to make a large, one-time investment?",
+      "options": [
+        { "value": 0, "text": "Never, I avoid large investments" },
+        { "value": 1, "text": "Very unlikely" },
+        { "value": 2, "text": "Maybe, if conditions are good" },
+        { "value": 3, "text": "Quite likely if I see potential" },
+        { "value": 4, "text": "Very likely, I prefer lump-sum investments" }
+      ]
+    },
+    {
+      "trait": "liquidity",
+      "question": "How important is the ability to quickly sell or withdraw your investments?",
+      "options": [
+        { "value": 0, "text": "Not important at all" },
+        { "value": 1, "text": "Slightly important" },
+        { "value": 2, "text": "Somewhat important" },
+        { "value": 3, "text": "Important" },
+        { "value": 4, "text": "Very important, I always want quick access" }
+      ]
+    },
+    {
+      "trait": "income_stability",
+      "question": "How stable is your current source of income?",
+      "options": [
+        { "value": 0, "text": "Highly unstable, no fixed income" },
+        { "value": 1, "text": "Somewhat unstable, irregular income" },
+        { "value": 2, "text": "Moderately stable, but varies sometimes" },
+        { "value": 3, "text": "Fairly stable with minor fluctuations" },
+        { "value": 4, "text": "Very stable, fixed monthly income" }
+      ]
+    },
+    {
+      "trait": "diversification",
+      "question": "How important is diversifying your investments across multiple assets?",
+      "options": [
+        { "value": 0, "text": "Not important, I stick to one type" },
+        { "value": 1, "text": "Slightly important" },
+        { "value": 2, "text": "Moderately important" },
+        { "value": 3, "text": "Very important" },
+        { "value": 4, "text": "Extremely important, I want maximum diversification" }
+      ]
+    },
+    {
+      "trait": "sustainability_focus",
+      "question": "Do you prefer investing in companies that are environmentally or socially responsible?",
+      "options": [
+        { "value": 0, "text": "Not at all, I don't care about it" },
+        { "value": 1, "text": "Slightly prefer" },
+        { "value": 2, "text": "Neutral" },
+        { "value": 3, "text": "I generally prefer sustainable companies" },
+        { "value": 4, "text": "I only invest in sustainable options" }
+      ]
+    },
+    {
+      "trait": "tax_sensitivity",
+      "question": "How much do you consider tax benefits when making investments?",
+      "options": [
+        { "value": 0, "text": "Not at all" },
+        { "value": 1, "text": "Rarely" },
+        { "value": 2, "text": "Sometimes" },
+        { "value": 3, "text": "Often" },
+        { "value": 4, "text": "Always, taxes play a major role in my choices" }
+      ]
+    },
+    {
+      "trait": "growth_focus",
+      "question": "How much do you prioritize growth potential over immediate returns?",
+      "options": [
+        { "value": 0, "text": "Not at all, I only care about immediate returns" },
+        { "value": 1, "text": "Slightly prioritize growth" },
+        { "value": 2, "text": "Moderately prioritize growth" },
+        { "value": 3, "text": "Strongly prioritize growth" },
+        { "value": 4, "text": "I only care about long-term growth" }
+      ]
+    },
+    {
+      "trait": "income_focus",
+      "question": "How important is it for your investments to generate regular income (e.g., dividends, rent)?",
+      "options": [
+        { "value": 0, "text": "Not at all important" },
+        { "value": 1, "text": "Slightly important" },
+        { "value": 2, "text": "Moderately important" },
+        { "value": 3, "text": "Very important" },
+        { "value": 4, "text": "Extremely important, I depend on it" }
+      ]
+    },
+    {
+      "trait": "automation_friendly",
+      "question": "How comfortable are you with automated investing (like robo-advisors)?",
+      "options": [
+        { "value": 0, "text": "Not comfortable at all" },
+        { "value": 1, "text": "Slightly comfortable" },
+        { "value": 2, "text": "Moderately comfortable" },
+        { "value": 3, "text": "Very comfortable" },
+        { "value": 4, "text": "Extremely comfortable, I prefer automation" }
+      ]
+    },
+    {
+      "trait": "emergency_reserve",
+      "question": "Do you have an emergency savings fund that you can rely on?",
+      "options": [
+        { "value": 0, "text": "No emergency savings at all" },
+        { "value": 1, "text": "Very little, less than 1 month of expenses" },
+        { "value": 2, "text": "Some savings, about 2-3 months of expenses" },
+        { "value": 3, "text": "Good savings, about 4-6 months of expenses" },
+        { "value": 4, "text": "Strong savings, more than 6 months of expenses" }
+      ]
+    }
+  ]
+}

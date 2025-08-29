@@ -1,4 +1,5 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Portfolio, Holding, Transaction, InvestmentProfile
@@ -8,11 +9,12 @@ from .serializers import (
     TransactionSerializer,
     InvestmentProfileSerializer
 )
+import yfinance as yf
 
 
 # -----------------------------
 # Portfolio CRUD
-# -----------------------------
+# ----------------------------- 
 @api_view(["GET", "POST"])
 def portfolio_list_create(request):
     if request.method == "GET":
@@ -169,3 +171,109 @@ def investment_profile_detail(request, pk):
     elif request.method == "DELETE":
         profile.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+## PROFILE DETAILS VIEW
+### Detail for every ticker and also detail for personal portfolio
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def portfolio_detail_api(request, pk):
+    """
+    Returns portfolio details with holdings list
+    """
+    try:
+        portfolio = Portfolio.objects.get(pk=pk, user=request.user)
+        holdings = Holding.objects.filter(portfolio=portfolio)
+        
+        portfolio_data = {
+            "id": portfolio.id,
+            "name": portfolio.name,
+            "note": portfolio.note,
+            "total_value": float(portfolio.total_value),
+            "holdings": [
+                {
+                    "id": holding.id,
+                    "ticker": holding.ticker,
+                    "quantity": float(holding.quantity),
+                    "avg_buy_price": float(holding.avg_buy_price),
+                    "current_price": float(holding.current_price) if holding.current_price else None,
+                    "current_value": float(holding.current_value()) if holding.current_value() else None
+                }
+                for holding in holdings
+            ]
+        }
+        
+        return Response(portfolio_data)
+    except Portfolio.DoesNotExist:
+        return Response({"error": "Portfolio not found"}, status=404)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def portfolio_history_api(request, pk):
+    """
+    Returns historical price data for all tickers in portfolio
+    Query params: period (1mo|3mo|6mo|1y|2y|5y|10y|max), interval (1d|5d|1wk|1mo)
+    """
+    try:
+        portfolio = Portfolio.objects.get(pk=pk, user=request.user)
+        holdings = Holding.objects.filter(portfolio=portfolio)
+        
+        period = request.GET.get('period', '6mo')
+        interval = request.GET.get('interval', '1d')
+        
+        result = {
+            "portfolio_id": portfolio.id,
+            "portfolio_name": portfolio.name,
+            "period": period,
+            "interval": interval,
+            "tickers": []
+        }
+        
+        for holding in holdings:
+            ticker_symbol = holding.ticker.upper()
+            try:
+                # Fetch data from yfinance
+                ticker = yf.Ticker(ticker_symbol)
+                hist = ticker.history(period=period, interval=interval)
+                
+                if not hist.empty:
+                    dates = [date.strftime('%Y-%m-%d') for date in hist.index]
+                    prices = [float(price) for price in hist['Close'].values]
+                    
+                    ticker_data = {
+                        "ticker": ticker_symbol,
+                        "holding_id": holding.id,
+                        "quantity": float(holding.quantity),
+                        "dates": dates,
+                        "prices": prices,
+                        "current_price": prices[-1] if prices else None
+                    }
+                else:
+                    ticker_data = {
+                        "ticker": ticker_symbol,
+                        "holding_id": holding.id,
+                        "quantity": float(holding.quantity),
+                        "dates": [],
+                        "prices": [],
+                        "current_price": None,
+                        "error": "No data available"
+                    }
+                    
+            except Exception as e:
+                ticker_data = {
+                    "ticker": ticker_symbol,
+                    "holding_id": holding.id,
+                    "quantity": float(holding.quantity),
+                    "dates": [],
+                    "prices": [],
+                    "current_price": None,
+                    "error": str(e)
+                }
+            
+            result["tickers"].append(ticker_data)
+        
+        return Response(result)
+        
+    except Portfolio.DoesNotExist:
+        return Response({"error": "Portfolio not found"}, status=404)
