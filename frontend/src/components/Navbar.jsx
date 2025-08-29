@@ -19,11 +19,18 @@ export default function Navbar() {
     setMenuOpen(false);
   }, [location]);
 
-  const navLinks = [
-    { to: '/', label: 'Courses' },
-    { to: '/dashboard', label: 'Dashboard' },
-    { to: '/profile', label: 'Profile' }
-  ];
+  // const navLinks = [
+  //   { to: '/', label: 'Courses' },
+  //   { to: '/dashboard', label: 'Dashboard' },
+  //   { to: '/profile', label: 'Profile' }
+  // ];
+const navLinks = [
+  { to: '/', label: 'Courses' },
+  { to: '/dashboard', label: 'Dashboard' },
+  { to: '/profile', label: 'Profile' },
+  { to: '/traits', label: 'Traits' },              
+  { to: '/create-portfolio', label: 'New Portfolio' } 
+];
 
   return (
     <nav className="navbar">
