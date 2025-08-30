@@ -16,6 +16,7 @@ import QuestionnaireForm from "./components/QuestionnaireForm";
 import TraitForm from "./components/TraitForm";
 import CreatePortfolio from "./components/CreatePortfolio";
 import Unauthorized from "./components/Unauthorized";
+import PortFolioDetail from "./components/PortfolioDetail";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -70,8 +71,8 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/portfolio/details/" element={<PortFolioDetail portfolioId={1} />} />
       </Routes>
-
     </Router>
   );
 }
