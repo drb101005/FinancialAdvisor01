@@ -35,7 +35,7 @@ function App() {
           path="/dashboard"
           element={
             <PrivateRoute>
-              <PortfolioDashboard />
+              <PortFolioDetail portfolioId={1} />
             </PrivateRoute>
           }
         />
@@ -71,7 +71,10 @@ function App() {
             </PrivateRoute>
           }
         />
+ 
         <Route path="/portfolio/details/" element={<PortFolioDetail portfolioId={1} />} />
+
+
       </Routes>
     </Router>
   );

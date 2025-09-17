@@ -11,10 +11,6 @@ from .serializers import (
 )
 import yfinance as yf
 
-
-# -----------------------------
-# Portfolio CRUD
-# ----------------------------- 
 @api_view(["GET", "POST"])
 def portfolio_list_create(request):
     if request.method == "GET":
@@ -52,10 +48,6 @@ def portfolio_detail(request, pk):
         portfolio.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-# -----------------------------
-# Holding CRUD
-# -----------------------------
 @api_view(["GET", "POST"])
 def holding_list_create(request):
     if request.method == "GET":
@@ -93,10 +85,6 @@ def holding_detail(request, pk):
         holding.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-# -----------------------------
-# Transaction CRUD
-# -----------------------------
 @api_view(["GET", "POST"])
 def transaction_list_create(request):
     if request.method == "GET":
