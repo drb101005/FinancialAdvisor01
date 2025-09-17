@@ -71,9 +71,11 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/portfolio/details/" element={<PortFolioDetail portfolioId={1}/>} />
-      </Routes>
+ 
+        <Route path="/portfolio/details/" element={<PortFolioDetail portfolioId={1} />} />
 
+
+      </Routes>
     </Router>
   );
 }
