@@ -7,3 +7,4 @@ etc
 data_testing
 share
 __pycache__/
+./pyvenv.cfg
